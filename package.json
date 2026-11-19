@@ -9,7 +9,7 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "check": "node --check src/main.js && node --check src/ring.js && node --check src/punch.js && node --check scripts/fetch-assets.mjs"
+    "check": "node --check src/main.js && node --check src/ring.js && node --check src/punch.js && node --check src/sportswear.js && node --check scripts/fetch-assets.mjs"
   },
   "dependencies": {
     "three": "^0.180.0"

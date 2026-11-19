@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { BoxingRing } from './ring.js';
 import { createPunch } from './punch.js';
+import { applySportswear } from './sportswear.js';
 
 const MODEL_URL = `${import.meta.env.BASE_URL}models/farmer-woman-rigged.glb`;
 const $ = (selector) => document.querySelector(selector);
@@ -102,6 +103,7 @@ async function loadCharacter(url, label = 'GRAB3D · RIGGED', isBlob = false) {
     if (id !== requestNumber) return;
     const root = prepareOriginalCharacter(data.scene);
     const nextPunch = createPunch(root);
+    if (!isBlob) applySportswear(root);
     removeCharacter();
     character = root;
     punch = nextPunch;
