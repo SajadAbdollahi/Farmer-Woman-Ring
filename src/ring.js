@@ -50,7 +50,7 @@ function ringCanvasTexture() {
 }
 
 export class BoxingRing {
-  constructor(container) {
+  constructor(container, updateCharacter) {
     this.container = container;
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x0b121b);
@@ -101,6 +101,7 @@ export class BoxingRing {
     this.observer.observe(container);
 
     this.renderer.setAnimationLoop(() => {
+      updateCharacter?.(performance.now());
       if (this.cameraTarget) {
         this.camera.position.lerp(this.cameraTarget.position, .10);
         this.controls.target.lerp(this.cameraTarget.lookAt, .10);

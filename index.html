@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0c111a" />
-  <meta name="description" content="Original Grab3D Farmer Woman, unchanged, presented inside a Three.js boxing ring." />
+  <meta name="description" content="Rigged Grab3D Farmer Woman in an interactive Three.js boxing ring." />
   <title>Farmer Woman — In the Ring</title>
 </head>
 <body>
@@ -19,7 +19,7 @@
 
     <aside class="asset-note" dir="ltr">
       <span class="asset-note__led"></span>
-      <div><strong id="asset-status">LOADING ORIGINAL ASSET</strong><small>UNMODIFIED MODEL · NO ANIMATIONS</small></div>
+      <div><strong id="asset-status">LOADING ORIGINAL ASSET</strong><small>GRAB3D CHARACTER</small></div>
     </aside>
 
     <section id="loading-panel" class="loading-panel" role="status" aria-live="polite">
@@ -30,7 +30,7 @@
       <div id="load-actions" class="load-actions" hidden>
         <button type="button" id="retry-load" class="button button--primary">تلاش دوباره</button>
         <button type="button" id="import-recovery" class="button button--outline">انتخاب فایل GLB</button>
-        <a href="https://grab3d.com/models/characters/farmer-woman/" target="_blank" rel="noopener noreferrer">دانلود مدل از Grab3D ↗</a>
+        <a href="https://grab3d.com/dl/farmer-woman-rigged/farmer-woman-rigged.glb" target="_blank" rel="noopener noreferrer">دانلود مدل از Grab3D ↗</a>
       </div>
     </section>
 
@@ -41,10 +41,11 @@
         <button class="button" id="reset-view" type="button" title="بازگشت به زاویهٔ اولیه">بازنشانی دوربین</button>
       </div>
       <div class="tools__group">
+        <button class="button button--primary" id="punch" type="button" title="مشت (Space)" disabled>مشت</button>
         <button class="button button--outline" id="import-glb" type="button" title="جایگزینی فایل اصلی GLB">وارد کردن GLB</button>
       </div>
     </footer>
-    <p class="hint" dir="rtl">ماوس: چرخاندن • اسکرول: زوم • مدل بدون حرکت و بدون تغییر</p>
+    <p class="hint" dir="rtl">ماوس: چرخاندن • اسکرول: زوم • Space: مشت</p>
     <input id="file-input" type="file" accept=".glb,model/gltf-binary" hidden />
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
   </div>

@@ -2,12 +2,15 @@ import './style.css';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { BoxingRing } from './ring.js';
+import { createPunch } from './punch.js';
 
-const MODEL_URL = `${import.meta.env.BASE_URL}models/farmer-woman.glb`;
+const MODEL_URL = `${import.meta.env.BASE_URL}models/farmer-woman-rigged.glb`;
 const $ = (selector) => document.querySelector(selector);
-const studio = new BoxingRing($('#viewport'));
+const punchButton = $('#punch');
+const studio = new BoxingRing($('#viewport'), (now) => punch?.update(now));
 const loader = new GLTFLoader();
 let character = null;
+let punch = null;
 let requestNumber = 0;
 let toastTimeout;
 
@@ -25,7 +28,7 @@ function showError(error, isMissing) {
   $('#load-actions').hidden = false;
   $('#loading-title').textContent = isMissing ? 'فایل اصلی مدل هنوز موجود نیست' : 'بارگذاری مدل ناموفق بود';
   $('#loading-detail').textContent = isMissing
-    ? 'در پوشهٔ پروژه npm run assets را اجرا کن، یا فایل GLB همین مدل را از Grab3D بگیر و با دکمهٔ «انتخاب فایل GLB» وارد کن.'
+    ? 'فایل GLB مدل Rigged را از Grab3D بگیر و با دکمهٔ «انتخاب فایل GLB» وارد کن.'
     : `${error.message || error}. فایل GLB را بررسی کن یا دوباره تلاش کن.`;
   setProgress(0);
   setStatus('CHARACTER NOT LOADED');
@@ -45,11 +48,11 @@ function removeCharacter() {
     }
   });
   character = null;
+  punch = null;
+  punchButton.disabled = true;
 }
 
 function prepareOriginalCharacter(root) {
-  // Intentionally do not change imported materials, meshes, skinning,
-  // clothing, bone transforms, face, texture maps, or animation state.
   root.traverse((obj) => {
     if (obj.isMesh) {
       obj.castShadow = true;
@@ -78,12 +81,13 @@ function prepareOriginalCharacter(root) {
   return root;
 }
 
-async function loadCharacter(url, label = 'GRAB3D · ORIGINAL FULL QUALITY', isBlob = false) {
+async function loadCharacter(url, label = 'GRAB3D · RIGGED', isBlob = false) {
   const id = ++requestNumber;
+  punchButton.disabled = true;
   $('#loading-panel').hidden = false;
   $('#load-actions').hidden = true;
   $('#loading-title').textContent = 'در حال بارگذاری شخصیت اصلی...';
-  $('#loading-detail').textContent = 'نسخهٔ اصلی Farmer Woman با لباس‌ها، بافت‌ها و فرم دست‌نخورده بارگذاری می‌شود.';
+  $('#loading-detail').textContent = 'نسخهٔ Rigged شخصیت Farmer Woman با لباس‌ها و بافت‌های خودش بارگذاری می‌شود.';
   setProgress(5);
   setStatus('LOADING ORIGINAL ASSET');
 
@@ -97,19 +101,23 @@ async function loadCharacter(url, label = 'GRAB3D · ORIGINAL FULL QUALITY', isB
     });
     if (id !== requestNumber) return;
     const root = prepareOriginalCharacter(data.scene);
+    const nextPunch = createPunch(root);
     removeCharacter();
     character = root;
+    punch = nextPunch;
+    punchButton.disabled = !punch;
     studio.scene.add(character);
     studio.view('person');
     setProgress(100);
     $('#loading-panel').hidden = true;
-    setStatus('ORIGINAL MODEL · STATIC');
-    console.info('Farmer Woman loaded without any mesh or material changes', { label, originalAnimationsIgnored: data.animations.length });
-    notify('مدل اصلی بدون تغییر داخل رینگ قرار گرفت');
+    setStatus(punch ? 'ORIGINAL MODEL · READY' : 'MODEL LOADED');
+    console.info('Character loaded', { label, punchAvailable: Boolean(punch) });
+    notify('شخصیت داخل رینگ آماده است');
   } catch (error) {
     if (id !== requestNumber) return;
     const message = String(error?.message || error);
     console.error('Failed to load Farmer Woman GLB', error);
+    punchButton.disabled = !punch;
     showError(error, !isBlob && /404|not found|failed to fetch|unexpected token|failed to load|network/i.test(message));
   }
 }
@@ -117,6 +125,7 @@ async function loadCharacter(url, label = 'GRAB3D · ORIGINAL FULL QUALITY', isB
 $('#view-person').addEventListener('click', () => studio.view('person'));
 $('#view-ring').addEventListener('click', () => studio.view('ring'));
 $('#reset-view').addEventListener('click', () => studio.view('person'));
+punchButton.addEventListener('click', () => punch?.start());
 const input = $('#file-input');
 function openPicker() { input.click(); }
 $('#import-glb').addEventListener('click', openPicker);
@@ -135,6 +144,10 @@ input.addEventListener('change', async () => {
 });
 window.addEventListener('keydown', (event) => {
   if (event.target instanceof HTMLInputElement || event.repeat) return;
+  if (event.code === 'Space' && !(event.target instanceof HTMLButtonElement) && !punchButton.disabled) {
+    event.preventDefault();
+    punch.start();
+  }
   if (event.key.toLowerCase() === 'r') studio.view('person');
 });
 window.addEventListener('beforeunload', () => { requestNumber++; removeCharacter(); studio.dispose(); });

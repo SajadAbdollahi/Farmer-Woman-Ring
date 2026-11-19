@@ -6,10 +6,10 @@
   "scripts": {
     "assets": "node scripts/fetch-assets.mjs",
     "assets:force": "node scripts/fetch-assets.mjs --force",
-    "dev": "node scripts/fetch-assets.mjs --soft && vite --host 0.0.0.0",
+    "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "check": "node --check src/main.js && node --check src/ring.js && node --check scripts/fetch-assets.mjs"
+    "check": "node --check src/main.js && node --check src/ring.js && node --check src/punch.js && node --check scripts/fetch-assets.mjs"
   },
   "dependencies": {
     "three": "^0.180.0"

@@ -7,8 +7,12 @@ Exact source:
 
 License: CC0 1.0, public domain.
 
-Run `npm run assets` from the project root to download the GLB.
-The environment used to produce this ZIP did not allow downloading binary
-assets, so it is downloaded on your computer when running `npm run dev`.
+The viewer uses the rigged version at farmer-woman-rigged.glb by default.
 
-No extra boxing equipment or animations are applied to the character.
+Rigged model:
+  https://grab3d.com/dl/farmer-woman-rigged/farmer-woman-rigged.glb
+  License: CC0 1.0 (declared in the GLB).
+  The provided skeleton contains arm and hand joints. The viewer animates
+  the punch on this skeleton. The embedded walk and run clips are unused.
+
+Run `npm run assets` from the project root to download the static GLB.
