@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0c111a" />
+  <meta name="description" content="Original Grab3D Farmer Woman, unchanged, presented inside a Three.js boxing ring." />
+  <title>Farmer Woman — In the Ring</title>
+</head>
+<body>
+  <div id="app">
+    <main id="viewport" aria-label="صحنه سه‌بعدی شخصیت Farmer Woman داخل رینگ بوکس"></main>
+
+    <header class="identity" dir="ltr">
+      <div class="identity__line"><span class="dot"></span> 3D CHARACTER STUDY <span class="identity__division">/</span> 001</div>
+      <h1>FARMER<br/><em>WOMAN.</em></h1>
+      <p>THE ORIGINAL CHARACTER. IN A BOXING RING.</p>
+    </header>
+
+    <aside class="asset-note" dir="ltr">
+      <span class="asset-note__led"></span>
+      <div><strong id="asset-status">LOADING ORIGINAL ASSET</strong><small>UNMODIFIED MODEL · NO ANIMATIONS</small></div>
+    </aside>
+
+    <section id="loading-panel" class="loading-panel" role="status" aria-live="polite">
+      <div class="loading-panel__tag">ORIGINAL GLB / GRAB3D</div>
+      <h2 id="loading-title">در حال بارگذاری شخصیت...</h2>
+      <p id="loading-detail">مدل اصلی Farmer Woman با تمام لباس‌ها و متریال‌های خودش بارگذاری می‌شود.</p>
+      <div class="progress-track" aria-hidden="true"><div id="progress-bar"></div></div>
+      <div id="load-actions" class="load-actions" hidden>
+        <button type="button" id="retry-load" class="button button--primary">تلاش دوباره</button>
+        <button type="button" id="import-recovery" class="button button--outline">انتخاب فایل GLB</button>
+        <a href="https://grab3d.com/models/characters/farmer-woman/" target="_blank" rel="noopener noreferrer">دانلود مدل از Grab3D ↗</a>
+      </div>
+    </section>
+
+    <footer class="tools" dir="rtl">
+      <div class="tools__group">
+        <button class="button" id="view-person" type="button" title="نمای نزدیک‌تر شخصیت">نمای شخصیت</button>
+        <button class="button" id="view-ring" type="button" title="نمای کامل رینگ">نمای رینگ</button>
+        <button class="button" id="reset-view" type="button" title="بازگشت به زاویهٔ اولیه">بازنشانی دوربین</button>
+      </div>
+      <div class="tools__group">
+        <button class="button button--outline" id="import-glb" type="button" title="جایگزینی فایل اصلی GLB">وارد کردن GLB</button>
+      </div>
+    </footer>
+    <p class="hint" dir="rtl">ماوس: چرخاندن • اسکرول: زوم • مدل بدون حرکت و بدون تغییر</p>
+    <input id="file-input" type="file" accept=".glb,model/gltf-binary" hidden />
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
