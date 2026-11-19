@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { BoxingRing } from './ring.js';
 
-const MODEL_URL = '/models/farmer-woman.glb';
+const MODEL_URL = `${import.meta.env.BASE_URL}models/farmer-woman.glb`;
 const $ = (selector) => document.querySelector(selector);
 const studio = new BoxingRing($('#viewport'));
 const loader = new GLTFLoader();
